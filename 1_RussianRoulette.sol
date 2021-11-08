@@ -25,14 +25,18 @@ contract RussianRoulette
     }
 
 
-    function setOdds (uint256 oneInThisMany) public 
+    function setOdds (uint256 oneInThisMany) public isCreator
     {
-        require(msg.sender == creator, "Only creator can use this method");
+        
         odds = oneInThisMany;
        
     }
     
-    
+    modifier isCreator
+    {
+        require(msg.sender == creator, "Only creator can use this function");
+        _;
+    }
  
 
     
