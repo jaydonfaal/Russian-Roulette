@@ -36,17 +36,21 @@ contract RussianRoulette
  
 
     
-    function play() public returns(string memory)
+    function play() public returns(string memory) 
     {
+        uint odd = 6;
         for(; playersTurn < players.length; playersTurn++)
         {
-         uint odd = randMod(odds);
+
+         odd = randMod(odds);
         if(odd == 1)
         {
             lose(players[playersTurn]);
-            return "You Lost. Player list has been cleared. You may not play again";
+            playersTurn = 0;
+            return "Someone has Lost. Player list has been cleared. They may not play again";
         }
         }
+        playersTurn = 0;
     return "Everyone has survived";
     }
     
@@ -67,10 +71,10 @@ contract RussianRoulette
     }
     
     
-    function randMod(uint uBounds) internal returns(uint)
+    function randMod(uint modifyValue) internal returns(uint)
     {
         randNonce++;
-        return uint(keccak256(abi.encodePacked(block.timestamp,msg.sender,randNonce))) % uBounds;
+        return uint(keccak256(abi.encodePacked(block.timestamp,msg.sender,randNonce))) % modifyValue;
     }
     
     
